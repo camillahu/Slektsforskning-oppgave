@@ -1,0 +1,31 @@
+# Default ignored files
+/shelf/
+/.idea/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
+# Ignore build directories
+/target/
+
+# Ignore IntelliJ IDEA project files
+../.idea/
+/*.iml
+
+# Ignore logs
+*.log
+
+# Ignore compiled Scala classes
+*.class
+
+# Ignore temporary files
+*~
+.DS_Store
+Thumbs.db
+
+# Ignore environment files
+.env
+
+*.ged
