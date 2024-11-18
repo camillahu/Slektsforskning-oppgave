@@ -2,7 +2,7 @@ import gedcom.{GedcomProcessor, GedcomReader}
 import Utils.getInput
 
 object Main extends App {
-  private val filePath = "src/main/scala/UnderliggendeTreForCamilla/gedcom.ged"
+  private val filePath = "src/main/scala/FamilyTree/gedcom.ged"
   val lines = GedcomReader.readFile(filePath)
   val persons = GedcomProcessor.processLines(lines)
 
