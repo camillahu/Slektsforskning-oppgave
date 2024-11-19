@@ -5,23 +5,14 @@ package gedcom
 
 object GedcomProcessor {
   def processLines(lines: List[String]): List[Person] = {
-    def groupLines(lines: List[String]): List[List[String]] = {
-      lines.foldRight(List.empty[List[String]]) { (line, acc)
-      =>
-        if (line.startsWith("0 @I")) { //indikerer vanligvis starten av en ny person.
-          List(line) :: acc //lager en ny liste med denne linja og legger det foran acc
-        } else {
-          acc.headOption.map(head => (line :: head) :: acc.tail).getOrElse(acc)
-          //prøver å legge til linja til den nyeste personen sin liste.
-          // acc.headOption henter første acc om den eksisterer.
-          //hvis det er en acc addes denne linja til blokken og endrer ikke på noen andre blokker.
-          //hvis det ikke er noen acc, returneres alle acc uendret.
-        }
-
+    val personBlocks = lines.foldLeft(List[List[String]]()) { (blocks, line) =>
+      if (line.startsWith("0 @") && line.endsWith("INDI")) {
+        List(line) :: blocks
+      } else {
+        blocks.headOption.map(block => (line :: block) :: blocks.tail).getOrElse(blocks)
       }
-    }
-
-    groupLines(lines).flatMap(GedcomParser.parsePerson)
+    }.reverse
+    personBlocks.flatMap(block => GedcomParser.parsePerson(block.reverse))
   }
 
   def findPersonById(persons: List[Person], id: String): Option[Person] = {
